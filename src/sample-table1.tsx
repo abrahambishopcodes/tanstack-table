@@ -9,6 +9,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "./components/ui/card";
 
 import { useReactTable, createColumnHelper, getCoreRowModel } from "@tanstack/react-table";
+import { useMemo } from "react";
 
 
 const SampleTable1 = () => {
@@ -22,7 +23,8 @@ const SampleTable1 = () => {
     }
 
     // Table Data
-    const data: User[] = [
+    const data = useMemo<User[]>(
+      () => [
       {
         name: "John Larry",
         email: "larry@gmail.com",
@@ -47,18 +49,27 @@ const SampleTable1 = () => {
         role: "Merchant",
         status: "Active"
       }
-    ]
+    ], [])
 
     const columnHelper = createColumnHelper<User>();
 
     // Table columns
-    const columns = [
+    const columns = useMemo(() => [
       columnHelper.accessor("name", {
         header: "Name",
         cell: props => <span>{props.getValue()}</span>
+      }),
+      columnHelper.accessor("email", {
+        header: "Email",
+        cell: props => <span>{props.getValue()}</span>
+      }),
+      columnHelper.accessor("role", {
+        header: "Role",
+        cell: props => <span>{props.getValue()}</span>
       })
-    ]
+    ], [columnHelper])
 
+    // Table instance
     const table = useReactTable({
       data: data,
       columns: columns,
@@ -66,6 +77,7 @@ const SampleTable1 = () => {
     })
 
     const rows = table.getRowModel().rows
+
 
   return (
     <Card className="p-0">
@@ -82,11 +94,15 @@ const SampleTable1 = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>John Doe</TableCell>
-              <TableCell>[EMAIL_ADDRESS]</TableCell>
-              <TableCell>Admin</TableCell>
-            </TableRow>
+            {
+              rows.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell>{row.getValue("name")}</TableCell>
+                  <TableCell>{row.getValue("email")}</TableCell>
+                  <TableCell>{row.getValue("role")}</TableCell>
+                </TableRow>
+              ))
+            }
           </TableBody>
         </Table>
       </CardContent>
