@@ -128,3 +128,12 @@
     @apply font-mono;
     }
 }
+
+@layer utilities {
+  .card-header{
+    @apply bg-green-200 p-6;
+  }
+  .card-content{
+    @apply pb-6
+  }
+}

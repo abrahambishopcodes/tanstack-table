@@ -5,8 +5,8 @@ import {
   TableHeader,
   TableRow,
   TableCell,
-} from "./components/ui/table";
-import { Card, CardHeader, CardTitle, CardContent } from "./components/ui/card";
+} from "../components/ui/table";
+import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 
 import {
   useReactTable,
@@ -88,10 +88,10 @@ const SampleTable1 = () => {
 
   return (
     <Card className="p-0">
-      <CardHeader className="bg-green-200 p-6">
+      <CardHeader className="card-header">
         <CardTitle>Sample table</CardTitle>
       </CardHeader>
-      <CardContent className="pb-6">
+      <CardContent className="card-content">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
